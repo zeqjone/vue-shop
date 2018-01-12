@@ -1,0 +1,27 @@
+{
+	"sysname":"my vue test",
+	"author":"zeqos",
+	"time":"2017.12.08",
+	"desc":"this is a project which records the way I've learned the vue",
+	"bottomNav":[{
+		"text":"首页",
+		"icon":"",
+		"link":"#/home",
+		"state":"on"
+	},{
+		"text":"商品",
+		"icon":"",
+		"link":"#/good",
+		"state":""
+	},{
+		"text":"购物车",
+		"icon":"",
+		"link":"#/cart",
+		"state":""
+	},{
+		"text":"我",
+		"icon":"",
+		"link":"#/user",
+		"state":""
+	}]
+}

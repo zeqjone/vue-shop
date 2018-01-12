@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<title>百度地图</title>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=A48931a88153627740c6ea47050e28b0"></script>
+	<script type="text/javascript" src="clipboard.min.js"></script>
+	<style type="text/css">  
+	html{height:100%}  
+	body{height:100%;margin:0px;padding:0px}  
+	#bmap_holder{height:90%}  
+	.bmap_holder{
+		position: relative;
+		height: 100%;
+	}
+	.sourceCode{
+		display: none;
+		position: absolute;
+		border:1px solid #aaa;
+		top:50%;
+		left: 50%;
+		height: 400px;
+		width: 500px;
+		transform: translate(-50%,-50%);
+		overflow-y: auto;
+		background-color: #f2f2f2;
+		padding:10px;
+	}
+	.sourceCode pre{
+		background-color: #fff;
+		white-space: pre-wrap;
+	}
+</style>
+</head>
+<body>
+	<div class="bmap_holder">
+		<div id="bmap_holder">
+
+		</div>
+		<input type="text" name="key" maxlength="84" id="txt_key" />
+		<input type="button" value="查询" id="bmap_search" />
+		<input type="button" value="获取代码" id="bmap_save" />
+		<div id="sourceCode_holder" class="sourceCode">
+			<pre id="copyCodeHolder">
+			</pre>
+			<button class="btn" id="bmap_copy">复制代码</button>
+			<button class="btn" id="bmap_close">关闭</button>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var centerSet = {lng:116.404,lat:39.915};
+		var map = new BMap.Map("bmap_holder");          
+		var point = new BMap.Point(centerSet.lng, centerSet.lat);  
+		map.centerAndZoom(point, 14);  
+		map.enableScrollWheelZoom(true);
+
+		function ajax(type,url,data,dataType,callback){
+			function stateChange(){
+				if(httpReq.readyState == 4){
+					if(httpReq.status == 200){
+						if(dataType == 'json'){
+
+						}
+						console.log(httpReq);
+					}
+					else{
+						alert('服务器返回错误！');
+					}
+				}
+			};
+			var httpReq = new XMLHttpRequest();
+			httpReq.onreadystatechange = stateChange;
+			httpReq.open(type,url,true);
+			httpReq.send(data);
+		}
+	</script>
+	<script type="text/javascript">
+		document.getElementById('bmap_save').onclick = function(){
+			var _el = document.getElementById('sourceCode_holder');
+			if(_el.style.display != "block"){
+				_el.style.display = "block";
+				var html = "&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;head&gt; &lt;meta http-equiv=&quot;Content-type&quot; content=&quot;text/html; charset=utf-8&quot;/&gt; &lt;meta name=&quot;viewport&quot; content=&quot;initial-scale=1.0, user-scalable=no&quot; /&gt; &lt;title&gt;百度地图&lt;/title&gt; &lt;script type=&quot;text/javascript&quot; src=&quot;http://api.map.baidu.com/api?ak=A48931a88153627740c6ea47050e28b0&v=2.0&quot;&gt;&lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;div id=&quot;map_holder2&quot; style=&quot;width:697px;height:550px;&quot; &gt; &lt;/div&gt; &lt;script type=&quot;text/javascript&quot;&gt; var centerSet = " + 
+				JSON.stringify(centerSet) 
+				+ "; var map2 = new BMap.Map(&quot;map_holder2&quot;); var point = new BMap.Point(centerSet.lng,centerSet.lat); map2.centerAndZoom(point, 15); map2.enableScrollWheelZoom(true);map2.addOverlay(new BMap.Marker(point)); &lt;/script&gt; &lt;/body&gt; &lt;/html&gt;";
+				document.getElementsByTagName('pre')[0].innerHTML = html;
+				document.getElementById('bmap_copy').setAttribute('data-clipboard-text',html.replace(/\&lt;/g,'<').replace(/\&gt;/g,'>').replace(/\&quot;/g,'"'));
+			}
+			else{
+				_el.style.display = 'none';
+			}
+		};
+
+		var cb = new Clipboard('#bmap_copy');
+		document.getElementById('bmap_close').onclick = function(){
+			document.getElementById('sourceCode_holder').style.display = 'none';
+		}
+		var btn_search = document.getElementById('bmap_search');
+		var txt_key = document.getElementById('txt_key');
+		function jsonpCoper(d){
+			if(d && d.status == 0){
+				centerSet.lng = d.result.location.lng;
+				centerSet.lat = d.result.location.lat;
+				var point = new BMap.Point(centerSet.lng, centerSet.lat);  
+				map.centerAndZoom(point, 14);  
+				map.clearOverlays();
+				addBmapMarker(point);
+			}
+			else{
+				alert(d.msg);
+			}
+			document.getElementById('jsonpScript').remove();
+		}
+		btn_search.onclick = function(){
+			var key = txt_key.value;
+			if(key){
+				var jsonpScript = document.createElement('script');
+				jsonpScript.id = 'jsonpScript';
+				jsonpScript.src = 'http://api.map.baidu.com/geocoder/v2/?address=' + key + '&output=json&ak=A48931a88153627740c6ea47050e28b0&callback=jsonpCoper&t=' + +new Date();
+				document.body.appendChild(jsonpScript);
+			}
+
+		}
+		</script>	
+		<script type="text/javascript">		
+			addBmapMenu();
+		function addBmapMenu(){
+			var mapContextMenu = new BMap.ContextMenu();
+			var mapMenuList = [{
+				text:'添加标注',
+				callback:function(point,offset){
+					addBmapMarker(point);
+				}
+			},{
+				text:'清空标注',
+				callback:function(){
+					map.clearOverlays();
+				}
+			}];
+			for(var i=0;i<mapMenuList.length;i++){
+				mapContextMenu.addItem(new BMap.MenuItem(mapMenuList[i].text,mapMenuList[i].callback))
+			}
+			map.addContextMenu(mapContextMenu);
+		}
+
+		function addBmapMarker(point){
+			centerSet.lng = point.lng;
+			centerSet.lat = point.lat;
+			var marker = new BMap.Marker(new BMap.Point(point.lng,point.lat));
+			map.addOverlay(marker);
+		}
+	</script>
+</body>
+</html>
