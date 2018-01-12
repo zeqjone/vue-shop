@@ -1,2 +1,3 @@
 # vue-shop
-基于vue + vuex + axios + vue-router 编写的一个商城demo
+基于vue + vue-router + vuex + axios + mint-ui 编写的一个商城demo
+
