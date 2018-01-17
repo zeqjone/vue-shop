@@ -9,7 +9,7 @@
 	export default {
 		name:'good-index',
 		created() {
-			this.$emit('topage');
+			// this.$emit('topage');
 		},
 		data() {
 			return {

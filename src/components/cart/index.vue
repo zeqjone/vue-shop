@@ -8,7 +8,7 @@
 	export default {
 		name: 'cart',
 		created(){
-			this.$emit('topage');
+			// this.$emit('topage');
 		}
 	}
 </script>

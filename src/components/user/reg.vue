@@ -9,7 +9,7 @@
 export default {
 	name: 'user-reg',
 	created(){
-		this.$emit('topage');
+		// this.$emit('topage');
 	}
 }
 </script>

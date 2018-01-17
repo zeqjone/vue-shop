@@ -15,7 +15,6 @@
 			}
 		},
 		created: function(){
-			this.$emit('topage');
 			var that = this;
 			this.interval = setInterval(function(){
 				that.time = new Date().toLocaleTimeString();

@@ -10,8 +10,13 @@ import Good from '../components/good/index.vue';
 import GoodList from '../components/good/list.vue';
 import GoodDetail from '../components/good/detail.vue';
 
+import Specs from '../json/specs.json';
+
 var router = new VueRouter({
 	routes: [{
+		path:'/',
+		redirect:'/home'
+	},{
 		name:'home',
 		title:'home page',
 		path: '/home',
@@ -76,28 +81,10 @@ var router = new VueRouter({
 });
 
 router.beforeEach((to,from,next)=>{
-	console.log(to);
-	console.log(this);
-	var currentPageName = to.name;
-	function getPage(arr,name){
-		return arr.find(function(item){
-			return item.name == name;
-			if(item.children){
-				return getPage(item.children,name);
-			}
-		});
-	}
-	var currentRout = getPage(this.a.options.routes,currentPageName);
-	this.pageTitle = currentRout.title;
-	this.bottomNav.forEach((item,idx) => {
-		if(idx == currentRout.navIndex){
-			item.state = 'on';
-		}
-		else{
-			item.state = '';
-		}
-	});
+	var currentPageName = to.name || 'home';
+	this.a.app.$store.commit('topage',{routes:this.a.options.routes,pageName:currentPageName});
 	next();
 });
+
 
 export default router;

@@ -7,6 +7,7 @@ import Navbar from './components/navbar.vue';
 import Mint from 'mint-ui';
 import specs from './json/specs.json';
 import md5 from 'js-md5';
+import store from './store';
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
@@ -37,21 +38,28 @@ Vue.prototype.$ajax = axios;
 
 var vm = new Vue({
 	router:Router,
+	store,
 	data: function() {
 		return {
-			pageTitle:'test title',
+			pageTitle:"home page",
 			bottomNav:specs.bottomNav
 		};
 	},
-	template: '<div><SysHead v-bind:title="pageTitle" />'
-				+ '<div class="main"><router-view v-on:topage="changePage"></router-view>'
+	template: '<div><SysHead v-bind:title="getTitle" />'
+				+ '<div class="main"><router-view></router-view>'
 				+ '</div>'
-				+ '<Navbar v-on:topage="changePage" v-bind:module="bottomNav" />'
+				+ '<Navbar v-bind:module="getNav" />'
 				+ '</div>',
 	components: { SysHead, Navbar },
 	methods: {
-		changePage(pt) {
-			
+		
+	},
+	computed:{
+		getTitle(){
+			return this.$store.state.common.title;
+		},
+		getNav(){
+			return this.$store.state.common.navs;
 		}
 	}
 }).$mount('#app');

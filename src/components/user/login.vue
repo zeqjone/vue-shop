@@ -34,7 +34,7 @@
 			}
 		},
 		created() {
-			this.$emit('topage');
+			// this.$emit('topage');
 		},
 		methods: {
 			dologin() {
@@ -83,6 +83,7 @@
 <style scoped>
 	form{
 		max-width: 40rem;
+		width: 86%;
 		margin:2rem auto;
 	}
 	.sec_form_btn{

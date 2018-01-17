@@ -10,7 +10,6 @@
 	export default {
 		name: 'user-info',
 		created() {
-			this.$emit('topage');
 		}
 	}
 </script>

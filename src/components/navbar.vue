@@ -1,6 +1,6 @@
 <template>
 	<div class="navbar">
-		<a v-for="(item,index) in module" :href="item.link" :class="{on:item.state}" v-on:click="clkNav(index,$event)">
+		<a v-for="(item,index) in module" :href="item.link" :class="{on:item.state}">
 			{{item.text}}
 		</a>
 	</div>
@@ -14,7 +14,7 @@
 		},
 		methods: {
 			clkNav(message,event) {//注意这个参数名必须是message，event
-				this.$emit('topage',message + '');
+				// this.$emit('topage',message + '');
 			}
 		},
 		computed: {
