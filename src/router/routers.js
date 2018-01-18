@@ -55,7 +55,7 @@ var router = new VueRouter({
 		children: [ {
 			name:'user-profile',
 			title: 'user profile ',
-			path:'/info',
+			path:'profile',
 			navIndex:3,
 			component: UserInfo
 		},{

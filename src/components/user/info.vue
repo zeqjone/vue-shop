@@ -1,7 +1,7 @@
 <template>
 	<div>
 	这里是用户信息。
-	{{this.$route.params.id}}
+	{{userId}}
 	<router-view></router-view>
 </div>
 </template>
@@ -10,6 +10,11 @@
 	export default {
 		name: 'user-info',
 		created() {
+		},
+		computed:{
+			userId(){
+				return JSON.stringify(this.$store.state.common.user);
+			}
 		}
 	}
 </script>

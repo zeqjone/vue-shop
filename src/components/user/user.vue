@@ -27,7 +27,6 @@ export default {
 		};
 	},
 	created() {
-		// this.$emit('topage');
 		var that = this;
 		this.$ajax.get('/api/userinfo/get')
 		.then(function(res){

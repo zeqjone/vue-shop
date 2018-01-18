@@ -12,8 +12,6 @@
 </template>
 
 <script>
-	import md5 from 'js-md5';
-	import {Base64} from 'js-base64';
 	import {Toast} from 'mint-ui';
 	export default {
 		name:'user-login',
@@ -51,27 +49,14 @@
 					Toast('验证码不能为空！');
 					return false;
 				}
-				this.$ajax.post('/api/userinfo/login',{
+				this.$store.dispatch('auth',{
 					username: that.user.username,
-					password: Base64.toBase64(that.user.password),
-					code: that.user.code
-				})
-				.then(function(res){
-					if(res.status == 200){
-						if(res.data.Code == 200){
-							sessionStorage.setItem('th_user_id',res.data.content);
-							Toast('登录成功！');
-							setTimeout(function(){
-								that.$router.push({name:'user'});
-							},2000);
-						}
-						else
-							Toast(res.data.Msg);
+					password: that.user.password,
+					code: that.user.code,
+					sucFunc:function(){
+						that.$router.push({name:'user'});
 					}
-				})
-				.catch(function(res){
-					console.log(res);
-				})
+				});
 			},
 			refresh(){
 				this.validCodeUrl += 't=' + +new Date();
