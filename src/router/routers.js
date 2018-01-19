@@ -4,7 +4,7 @@ import Home from '../Home.vue';
 import User from '../components/user/user.vue';
 import UserLogin from '../components/user/login.vue';
 import UserReg from '../components/user/reg.vue';
-import UserInfo from '../components/user/info.vue';
+import UserInfo from '../components/user/profile.vue';
 import Cart from '../components/cart/index.vue';
 import Good from '../components/good/index.vue';
 import GoodList from '../components/good/list.vue';

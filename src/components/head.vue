@@ -1,6 +1,6 @@
 <template>
 	<div class="head">
-		<a class="back" href="javascript:;">&lt;</a>
+		<a class="back" href="javascript:;" @click.prevent="goback">&lt;</a>
 		{{title}}
 	</div>
 </template>
@@ -9,8 +9,10 @@
 	export default {
 		name: 'head',
 		props:['title'],
-		data() {
-			return {}
+		methods:{
+			goback(){
+				this.$router.go(-1);
+			}
 		}
 	}
 </script>

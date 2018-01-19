@@ -34,6 +34,7 @@ export default {
 				if (res.data.Code == 200) {
 					that.loginStatus = true;
 					that.user = res.data.content;
+					that.$store.commit('setUserInfo',res.data.content);
 				}
 				else if(res.data.Code == 405){
 					sessionStorage.removeItem('th_user_id');

@@ -70,6 +70,9 @@ const mutations = {
 		if(payload.Code == 200){
 			Vue.set(state.user,'user_id', payload.content.Value);
 		}
+	},
+	setUserInfo(state,payload){
+		state.user = payload;
 	}
 };
 
